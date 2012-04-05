@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BootstrapX - clickover :: Examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body { padding-top: 60px; }
+     </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="../js/bootstrapx-clickover.js"></script>
+
+    <script type="text/javascript">
+      $(function() { 
+          $('[rel="clickover"]').clickover(); 
+
+          $('#auto-close-co').clickover({
+            auto_close: 15 * 1000            
+          });
+
+          $('#no-global-co').clickover({ global_close: false });
+      })
+    </script>
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">BootstrapX - clickover</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Examples</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="hero-unit">
+          <h2>BootstrapX - clickover</h2>
+          <p>BootstrapX - clickover provides a Bootstrap extension to allow popovers to be opened and closed with clicks on elements instead of hover or focus (which is buggy at times).</p>
+          <p><a class="btn btn-primary btn-large" rel="clickover" 
+            title="clickover code"
+            data-content="
+            click over content.
+            &lt;pre&gt;$('[rel='clickover']').clickover();&lt;/pre&gt;
+            &lt;button class='btn' data-toggle='button' data-dismiss='clickover'
+            &gt;Close&lt;/button&gt;">See Example</a></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div span="offset4 span8 last">
+          <h2>Why?</h2>
+          <p>As part of a recent project we needed many of the features of <a href="http://twitter.github.com/bootstrap/javascript.html#popovers">Bootstrap Popovers</a> but wanted to provide forms and other items in them that made using popovers very manually tendious. 
+          </p>
+
+          <h3>Clickover Features</h3>
+          <ul>
+            <li>Click to open and close</li>
+            <li>Supports in clickover close button or element</li>
+            <li>Option to close clickover when click is else where in body</li>
+            <li>auto timeout option - Allows clickover to automatically close after some amount of time</li>
+          </ul>
+        </div><!--/span-->
+      </div><!-- .row -->
+
+      <div class="row">
+        <div span="offset4 span8 last">
+          <h2>Details</h2>
+
+          <p>Button will open clickover click else where to close</p>
+          <div class="well">
+            <a href="#" class="btn btn-danger" rel="clickover" title="Out of the Box" data-content="I will stay here until you click away from me">Click for clickover</a>
+          </div>
+
+          <h3>Code</h3>
+          <p>Enable clickover via javascript:
+          <pre>$('#example').clickover(options)</pre>
+
+          <h3>Options</h3>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>type</th>
+                <th>default</th>
+                <th>description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>auto_close</td>
+                <td>number</td>
+                <td>0</td>
+                <td>Value in milliseconds. Values greater than 0 will trigger
+                  clickover to auto close in that time</td>
+              </tr>
+
+              <tr>
+                <td>global_close</td>
+                <td>boolean</td>
+                <td>true</td>
+                <td>True will have clickover close when click event elsewhere in
+                  body is triggered</td>
+              </tr> 
+            </tbody>
+          </table>
+
+          <h3>Markup</h3>
+          <p>Just like Tooltip and Popover, Clickover is opt in data-api.</p>
+          <pre>$('[rel="clickover"]').clickover()</pre>
+
+          <h3>Close Element</h3>
+          <p> For now to have element inside clickover close it you must use attribute:</p>
+          <pre>data-toggle="clickover"</pre>
+        </div>
+      </div>
+
+      <div class="row">
+        <div span="offset4 span8 last">
+          <h2>Few Examples</h2>
+
+          <p> Auto close in 15 seconds: </p>
+          <div class="well">
+            <a href="#" id="auto-close-co" class="btn btn-primary" title="Auto Close" data-content="I will close in 15 seconds. Wait for it....">Auto Close Clickover</a>
+          </div>
+
+          <pre>
+$('#auto-close-co').clickover({
+  auto_close: 15 * 1000            
+}); </pre>
+
+          <p> Only close clickover with button:</p>
+          <div class="well">
+            <a href="#" id="no-global-co" class="btn btn-secondary" title="No Global Close" data-content="You must click close button &lt;button class='btn' data-dismiss='clickover' &gt;Close&lt;/button&gt;">No Global Clickover</a>
+          </div>
+
+          <pre> $('#no-global-co').clickover({ global_close: false}); </pre>
+        </div>
+      </div>
+
+      <hr>
+    </div><!--/.container-->
+
+    <footer>
+    </footer>
+
+  </body>
+</html>

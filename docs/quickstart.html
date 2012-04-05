@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+  <title>bootstrapx-clickover Quick Start</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.2/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../js/bootstrapx-clickover.js"></script>
+
+  <script type="text/javascript">
+    $(function() { $('[rel="clickover"]').clickover(); })
+  </script>
+  <link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="screen" /> 
+</head>
+
+<body>
+  <div class="container">
+    <button rel="clickover" 
+      data-content="Show something here. 
+          &lt;button data-dismiss='clickover'
+          &gt;Close Clickover&lt;/button&gt;">Show Clickover</button>
+  </div>
+</body>
+</html>
