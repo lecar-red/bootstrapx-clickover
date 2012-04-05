@@ -57,6 +57,12 @@
         this.options.global_close &&
           $('body').one( this.attr.click_event_ns, $.proxy(this.hide, this));
 
+		// make sure to not close when clicked inside tip unless
+		// its the button
+		this.tip().on('click', function(e) { 
+			e.stopPropagation(); 
+		});
+
         // if element has close button then make that work, like to
         // add option close_selector
         this.tip().on('click', '[data-dismiss="clickover"]', $.proxy(this.hide, this));

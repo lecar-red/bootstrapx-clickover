@@ -1,4 +1,4 @@
-[Bootstrapx Clickover]
+Bootstrapx Clickover
 =================
 
 bootstrapx clickover provides enhancements to [Twitter Bootstrap Popovers](http://twitter.github.com/bootstrap#popover) to allow popovers to be opened/closed with click events and some other niceities
@@ -6,7 +6,19 @@ bootstrapx clickover provides enhancements to [Twitter Bootstrap Popovers](http:
 Quick Start
 -----------
 
-Coming Soon :)
+After including bootstrapx-clickover.js do the following:
+
+ $('rel["clickover"]').clickover();
+
+Requires
+--------
+
+Must include bootstrap's tooltip and popover js libraries and bootstrap's css
+
+Resources
+---------
+
+See examples at http://
 
 Bug tracker
 -----------
