@@ -25,7 +25,7 @@
       this.attr = {};
 
       // setup event ns space to safely remove the click hanlder
-      this.attr.me = Date.now();
+      this.attr.me = +(new Date); // IE 8 doesn't like Date.now();
       this.attr.click_event_ns = "click." + this.attr.me;
 
       // we will do our own stuff
