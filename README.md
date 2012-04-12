@@ -18,7 +18,7 @@ Must include bootstrap's tooltip and popover js libraries and bootstrap's css
 Resources
 ---------
 
-See examples at http://
+See examples at http://www.leecarmichael.com/bootstrapx-clickover/examples.html
 
 Bug tracker
 -----------
