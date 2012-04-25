@@ -28,9 +28,7 @@
       this.attr.me = +(new Date); // IE 8 doesn't like Date.now();
       this.attr.click_event_ns = "click." + this.attr.me;
 
-      // we will do our own stuff
-      if (!options) 
-        options = {};
+      if (!options) options = {};
 
       options.trigger = 'manual';
 
@@ -49,7 +47,8 @@
 
       // need to stop progration or body click handler would fire right away
       e.stopPropagation();
-    
+   
+	  // we could override this to provide show and hide hooks 
       this.toggle();
 
       // if shown add global click closer
@@ -59,9 +58,7 @@
 
 		// make sure to not close when clicked inside tip unless
 		// its the button
-		this.tip().on('click', function(e) { 
-			e.stopPropagation(); 
-		});
+		this.tip().on('click', function(e) { e.stopPropagation(); });
 
         // if element has close button then make that work, like to
         // add option close_selector
@@ -72,6 +69,10 @@
           this.attr.tid = 
             setTimeout( $.proxy(this.hide, this), this.options.auto_close );  
         }
+
+		// provide callback hooks for post shown event
+		typeof this.options.onShown == 'function' && this.options.onShown.call(this);
+		this.$element.trigger('shown');
       }
       else {
         $('body').off( this.attr.click_event_ns ); 
@@ -80,6 +81,10 @@
           clearTimeout(this.attr.tid);
           delete this.attr.tid;
         }
+
+		// provide some callback hooks
+		typeof this.options.onHidden == 'function' && this.options.onHidden.call(this);
+		this.$element.trigger('hidden');
       }
     }
     , isShown: function() {
@@ -112,7 +117,9 @@
   $.fn.clickover.defaults = $.extend({}, $.fn.popover.defaults, {
     trigger: 'manual',
     auto_close:   0, /* ms to auto close clickover, 0 means none */
-    global_close: 1  /* allow close when clicked away from clickover */
+    global_close: 1, /* allow close when clicked away from clickover */
+    onShown:  null,
+    onHidden: null
   })
 
 }( window.jQuery );

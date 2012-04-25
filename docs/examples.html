@@ -31,6 +31,10 @@
           });
 
           $('#no-global-co').clickover({ global_close: false });
+
+          $('#shown-co').clickover({
+            onShown: function () { alert("Hello from clickover"); }
+          });
       })
     </script>
   </head>
@@ -125,7 +129,15 @@
                 <td>true</td>
                 <td>True will have clickover close when click event elsewhere in
                   body is triggered</td>
+              </tr>
+
+              <tr>
+                <td>onShown</td>
+                <td>function</td>
+                <td>undefined</td>
+                <td>Will run function with current object as <tt>this</tt></td>
               </tr> 
+
             </tbody>
           </table>
 
@@ -159,6 +171,14 @@ $('#auto-close-co').clickover({
           </div>
 
           <pre> $('#no-global-co').clickover({ global_close: false}); </pre>
+
+          <p>With onShown event handler</p>
+          <div class="well">
+            <a href="#" id="shown-co" class="btn" title="onShown Event" data-content="You'll see alert on event. &lt;button class='btn' data-dismiss='clickover' &gt;Close&lt;/button&gt;">onShownClickover</a>
+          </div>
+
+          <pre> $('#shown-co').clickover({ onShown: function() { alert("not very helpful") }} ); </pre>
+
         </div>
       </div>
 
