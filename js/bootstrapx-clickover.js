@@ -47,6 +47,13 @@
 
       // need to stop progration or body click handler would fire right away
       e.stopPropagation();
+
+      // set popover's dim's
+      this.options.width  && this.tip().find('.popover-inner').width(  this.options.width  );
+      this.options.height && this.tip().find('.popover-inner').height( this.options.height );
+
+      // set popover's tip 'id' for greater control of rendering or css rules
+      this.options.tip_id && this.tip().attr('id', this.options.tip_id );
    
 	  // we could override this to provide show and hide hooks 
       this.toggle();
@@ -58,6 +65,11 @@
 
 		// make sure to not close when clicked inside tip unless
 		// its the button
+        //
+        // TODO: make this be smarter, it needs to check for e.target 
+        // and then stop propgration but other elements can receive click event
+        // (elements on top of clickover should receive click events)
+        // 
 		this.tip().on('click', function(e) { e.stopPropagation(); });
 
         // if element has close button then make that work, like to
@@ -70,9 +82,9 @@
             setTimeout( $.proxy(this.hide, this), this.options.auto_close );  
         }
 
-		// provide callback hooks for post shown event
-		typeof this.options.onShown == 'function' && this.options.onShown.call(this);
-		this.$element.trigger('shown');
+        // provide callback hooks for post shown event
+        typeof this.options.onShown == 'function' && this.options.onShown.call(this);
+        this.$element.trigger('shown');
       }
       else {
         $('body').off( this.attr.click_event_ns ); 
@@ -83,8 +95,8 @@
         }
 
 		// provide some callback hooks
-		typeof this.options.onHidden == 'function' && this.options.onHidden.call(this);
-		this.$element.trigger('hidden');
+        typeof this.options.onHidden == 'function' && this.options.onHidden.call(this);
+        this.$element.trigger('hidden');
       }
     }
     , isShown: function() {
@@ -118,8 +130,11 @@
     trigger: 'manual',
     auto_close:   0, /* ms to auto close clickover, 0 means none */
     global_close: 1, /* allow close when clicked away from clickover */
-    onShown:  null,
-    onHidden: null
+    onShown:  null,  /* function to be run once clickover has been shown */
+    onHidden: null,  /* function to be run once clickover has been hidden */
+    width:  null, /* number is px (don't add px), null or 0 - don't set anything */
+    height: null, /* number is px (don't add px), null or 0 - don't set anything */
+    tip_id: null  /* id of popover container */
   })
 
 }( window.jQuery );

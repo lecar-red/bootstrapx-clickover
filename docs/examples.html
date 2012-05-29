@@ -35,6 +35,8 @@
           $('#shown-co').clickover({
             onShown: function () { alert("Hello from clickover"); }
           });
+
+          $('#set-tall-skinny').clickover({ width: 50, height: 300 });
       })
     </script>
   </head>
@@ -179,7 +181,17 @@ $('#auto-close-co').clickover({
 
           <pre> $('#shown-co').clickover({ onShown: function() { alert("not very helpful") }} ); </pre>
 
+          </div>
+
+          <p>Explicity set width &amp; height</p>
+          <div class="well">
+            <a href="#" id="set-tall-skinny" class="btn btn-info" title="explicit sizes" data-content="You'll see a funny sized popover very tall and narrow. &lt;button class='btn' data-dismiss='clickover' &gt;Close&lt;/button&gt;">Tall and Skinny</a>
+          </div>
+
+          <pre> $('#set-tall-skinny').clickover({ width: 50, height: 300 }); </pre>
+
         </div>
+
       </div>
 
       <hr>
