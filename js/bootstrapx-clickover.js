@@ -42,26 +42,35 @@
       // will need custom handler inside here
     }
     , clickery: function(e) {
-      // only run our click handler
-      e.preventDefault();
-
+      // clickery isn't only run by event handlers can be called by timeout or manually
+      // only run our click handler and  
       // need to stop progration or body click handler would fire right away
-      e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
 
       // set popover's dim's
       this.options.width  && this.tip().find('.popover-inner').width(  this.options.width  );
       this.options.height && this.tip().find('.popover-inner').height( this.options.height );
 
       // set popover's tip 'id' for greater control of rendering or css rules
-      this.options.tip_id && this.tip().attr('id', this.options.tip_id );
-   
+      this.options.tip_id     && this.tip().attr('id', this.options.tip_id );
+
+      // add a custom class
+      this.options.class_name && this.tip().addClass(this.options.class_name);
+
 	  // we could override this to provide show and hide hooks 
       this.toggle();
 
       // if shown add global click closer
       if ( this.isShown() ) {
+        // close on global request
         this.options.global_close &&
-          $('body').one( this.attr.click_event_ns, $.proxy(this.hide, this));
+          $('body').one( this.attr.click_event_ns, $.proxy(this.clickery, this));
+
+        // help us track elements w/ open clickovers using html5
+        this.$element.attr('data-clickover-open', 1);
 
 		// make sure to not close when clicked inside tip unless
 		// its the button
@@ -70,16 +79,16 @@
         // and then stop propgration but other elements can receive click event
         // (elements on top of clickover should receive click events)
         // 
-		this.tip().on('click', function(e) { e.stopPropagation(); });
+        this.tip().on('click', function(e) { e.stopPropagation(); });
 
         // if element has close button then make that work, like to
         // add option close_selector
-        this.tip().on('click', '[data-dismiss="clickover"]', $.proxy(this.hide, this));
+        this.tip().on('click', '[data-dismiss="clickover"]', $.proxy(this.clickery, this));
 
         // trigger timeout hide
         if ( this.options.auto_close && this.options.auto_close > 0 ) {
           this.attr.tid = 
-            setTimeout( $.proxy(this.hide, this), this.options.auto_close );  
+            setTimeout( $.proxy(this.clickery, this), this.options.auto_close );  
         }
 
         // provide callback hooks for post shown event
@@ -87,6 +96,8 @@
         this.$element.trigger('shown');
       }
       else {
+        this.$element.removeAttr('data-clickover-open');
+
         $('body').off( this.attr.click_event_ns ); 
 
         if ( typeof this.attr.tid == "number" ) {
@@ -134,7 +145,8 @@
     onHidden: null,  /* function to be run once clickover has been hidden */
     width:  null, /* number is px (don't add px), null or 0 - don't set anything */
     height: null, /* number is px (don't add px), null or 0 - don't set anything */
-    tip_id: null  /* id of popover container */
+    tip_id: null,  /* id of popover container */
+    class_name: 'clickover' /* default class name in addition to other classes */
   })
 
 }( window.jQuery );
