@@ -65,21 +65,23 @@
 
       // if shown add global click closer
       if ( this.isShown() ) {
-        // close on global request
+        var that = this;
+
+        // close on global request, exclude clicks inside clickover
         this.options.global_close &&
-          $('body').one( this.attr.click_event_ns, $.proxy(this.clickery, this));
+          $('body').on( this.attr.click_event_ns, function(e) {
+            if ( !that.tip().has(e.target).length ) { that.clickery(); }
+          });
+
+        // first check for others that might be open
+        // wanted to use 'click' but might accidently trigger other custom click handlers
+        // on clickover elements 
+        !this.options.allow_multiple &&
+            $('[data-clickover-open=1]').each( function() { 
+                $(this).data('clickover') && $(this).data('clickover').clickery(); });
 
         // help us track elements w/ open clickovers using html5
         this.$element.attr('data-clickover-open', 1);
-
-		// make sure to not close when clicked inside tip unless
-		// its the button
-        //
-        // TODO: make this be smarter, it needs to check for e.target 
-        // and then stop propgration but other elements can receive click event
-        // (elements on top of clickover should receive click events)
-        // 
-        this.tip().on('click', function(e) { e.stopPropagation(); });
 
         // if element has close button then make that work, like to
         // add option close_selector
@@ -146,7 +148,8 @@
     width:  null, /* number is px (don't add px), null or 0 - don't set anything */
     height: null, /* number is px (don't add px), null or 0 - don't set anything */
     tip_id: null,  /* id of popover container */
-    class_name: 'clickover' /* default class name in addition to other classes */
+    class_name: 'clickover', /* default class name in addition to other classes */
+    allow_multiple: 0 /* enable to allow for multiple clickovers to be open at the same time */
   })
 
 }( window.jQuery );
