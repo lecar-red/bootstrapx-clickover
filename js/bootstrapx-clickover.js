@@ -24,8 +24,8 @@
     , cinit: function( type, element, options ) {
       this.attr = {};
 
-      // setup event ns space to safely remove the click hanlder
-      this.attr.me = +(new Date); // IE 8 doesn't like Date.now();
+      // choose random attrs instead of timestamp ones
+      this.attr.me = ((Math.random() * 10) + "").replace(/\D/g, '');
       this.attr.click_event_ns = "click." + this.attr.me;
 
       if (!options) options = {};
