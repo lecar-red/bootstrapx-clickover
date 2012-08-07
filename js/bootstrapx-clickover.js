@@ -68,6 +68,10 @@
         // close on global request
         this.options.global_close &&
           $('body').one( this.attr.click_event_ns, $.proxy(this.clickery, this));
+          
+        this.options.esc_close && $(document).bind('keyup.clickery',function(e){ // keyup with eventnamespace
+	   (e.keyCode == 27)?that.clickery():return;
+        });
 
         // help us track elements w/ open clickovers using html5
         this.$element.attr('data-clickover-open', 1);
@@ -97,7 +101,7 @@
       }
       else {
         this.$element.removeAttr('data-clickover-open');
-
+	this.options.esc_close && $(document).unbind('keyup.clickery');
         $('body').off( this.attr.click_event_ns ); 
 
         if ( typeof this.attr.tid == "number" ) {
@@ -141,6 +145,7 @@
     trigger: 'manual',
     auto_close:   0, /* ms to auto close clickover, 0 means none */
     global_close: 1, /* allow close when clicked away from clickover */
+    esc_close:1, /* allow close when pressed esc */
     onShown:  null,  /* function to be run once clickover has been shown */
     onHidden: null,  /* function to be run once clickover has been hidden */
     width:  null, /* number is px (don't add px), null or 0 - don't set anything */
