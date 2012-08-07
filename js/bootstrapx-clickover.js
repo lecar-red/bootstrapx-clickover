@@ -70,7 +70,8 @@
           $('body').one( this.attr.click_event_ns, $.proxy(this.clickery, this));
           
         this.options.esc_close && $(document).bind('keyup.clickery',function(e){ // keyup with eventnamespace
-	   (e.keyCode == 27)?that.clickery():return;
+	   if(e.keyCode == 27){that.clickery();}
+	   return;
         });
 
         // help us track elements w/ open clickovers using html5
