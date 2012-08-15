@@ -37,6 +37,11 @@
           });
 
           $('#set-tall-skinny').clickover({ width: 50, height: 300 });
+
+          $('#no-esc').clickover({
+            placement: 'top',
+            esc_close: 0
+          });
       })
     </script>
   </head>
@@ -189,6 +194,13 @@ $('#auto-close-co').clickover({
           </div>
 
           <pre> $('#set-tall-skinny').clickover({ width: 50, height: 300 }); </pre>
+
+          <p>By default clickover will close when 'esc' key is pressed, disabled here</p>
+          <div class="well">
+            <a href="#" id="no-esc" class="btn btn-warning" title="no escape" data-content="No escape for this clickover! &lt;button class='btn' data-dismiss='clickover' &gt;Close&lt;/button&gt;">Esc disabled</a>
+          </div>
+
+          <pre> $('#no-esc').clickover({ placement: 'top', esc_close: 0 }); </pre>
 
         </div>
 
