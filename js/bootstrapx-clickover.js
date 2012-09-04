@@ -1,11 +1,14 @@
 /* ==========================================================
  * bootstrapx-clickover.js
  * https://github.com/lecar-red/bootstrapx-clickover
+ * version: 1.0
  * ==========================================================
  *
  * Based on work from Twitter Bootstrap and 
  * from Popover library http://twitter.github.com/bootstrap/javascript.html#popover
  * from the great guys at Twitter.
+ *
+ * Untested with 2.1.0 but should worked with 2.0.x
  *
  * ========================================================== */
 !function($) {
