@@ -15,10 +15,19 @@ Requires
 
 Must include bootstrap's tooltip and popover js libraries and bootstrap's css
 
+Currently it supports verisons: 2.0.x
+
+Not tested with bootstrap: 2.1.x (please give it a try and open a bug if you run into an issue)
+
 Resources
 ---------
 
 See examples at http://www.leecarmichael.com/bootstrapx-clickover/examples.html
+
+Version
+-----------
+
+1.0.0
 
 Bug tracker
 -----------

@@ -87,6 +87,8 @@
           <p>As part of a recent project we needed many of the features of <a href="http://twitter.github.com/bootstrap/javascript.html#popovers">Bootstrap Popovers</a> but wanted to provide forms and other items in them that made using popovers very manually tendious. 
           </p>
 
+          <p>clickover provide much nicer usage than popovers or tooltips for tablet users as well. By leaving widget open until closed and combined with <tt>auto_close</tt> option can provide tooltip/popover like fade support.</p>
+
           <h3>Clickover Features</h3>
           <ul>
             <li>Click to open and close</li>
@@ -139,14 +141,69 @@
               </tr>
 
               <tr>
+                <td>esc_close</td>
+                <td>boolean</td>
+                <td>true</td>
+                <td>Clickover will be closed when esc key is pressed by user.</td>
+              </tr>
+
+              <tr>
                 <td>onShown</td>
                 <td>function</td>
                 <td>undefined</td>
                 <td>Will run function with current object as <tt>this</tt></td>
               </tr> 
 
+              <tr>
+                <td>onHidden</td>
+                <td>function</td>
+                <td>undefined</td>
+                <td>Will run function with current object as <tt>this</tt> when clickover is closed.</td>
+              </tr>
+
+              <tr>
+                <td>width</td>
+                <td>pixel value</td>
+                <td>null</td>
+                <td>clickover will have width set to this value after its shown.</td>
+              </tr>
+
+              <tr>
+                <td>height</td>
+                <td>pixel value</td>
+                <td>null</td>
+                <td>clickover will have height set to this value after its shown.</td>
+              </tr>
+
+              <tr>
+                <td>tip_id</td>
+                <td>string</td>
+                <td>null</td>
+                <td>clickover will have this set as id after its shown.</td>
+              </tr>
+
+              <tr>
+                <td>class</td>
+                <td>string</td>
+                <td>'clickover'</td>
+                <td>clickover will have this set as class to its main parent element.</td>
+              </tr>
+
+              <tr>
+                <td>allow_multiple</td>
+                <td>boolean</td>
+                <td>false</td>
+                <td>When set to true allow multiple clickovers to be opened on page at same time.</td>
+              </tr>
             </tbody>
           </table>
+
+          <h3>Changing defaults</h3>
+          <p> To change the defaults for the page do the following: 
+          <pre>
+          $().clickover.defaults.<i>option_name</i>
+          </pre>
+          </p>
 
           <h3>Markup</h3>
           <p>Just like Tooltip and Popover, Clickover is opt in data-api.</p>
