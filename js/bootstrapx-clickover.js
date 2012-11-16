@@ -63,8 +63,8 @@
       // add a custom class
       this.options.class_name && this.tip().addClass(this.options.class_name);
 
-	  // we could override this to provide show and hide hooks 
-      this.toggle();
+      // we could override this to provide show and hide hooks 
+      this[ this.isShown() ? 'hide' : 'show' ]();
 
       // if shown add global click closer
       if ( this.isShown() ) {
