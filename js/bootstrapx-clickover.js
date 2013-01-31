@@ -54,8 +54,8 @@
       }
 
       // set popover's dim's
-      this.options.width  && this.tip().find('.popover-inner').width(  this.options.width  );
-      this.options.height && this.tip().find('.popover-inner').height( this.options.height );
+      this.options.width  && this.tip().width(  this.options.width  );
+      this.options.height && this.tip().height( this.options.height );
 
       // set popover's tip 'id' for greater control of rendering or css rules
       this.options.tip_id     && this.tip().attr('id', this.options.tip_id );
