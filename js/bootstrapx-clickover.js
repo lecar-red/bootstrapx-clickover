@@ -39,7 +39,7 @@
       this.init( type, element, options );
 
       // setup our own handlers
-      this.$element.on( 'click', this.options.selector, $.proxy(this.clickery, this) );
+      this.$element.on( 'click.' + this.type, this.options.selector, $.proxy(this.clickery, this) );
 
       // soon add click hanlder to body to close this element
       // will need custom handler inside here
