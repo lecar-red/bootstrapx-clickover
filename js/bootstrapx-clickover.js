@@ -109,6 +109,7 @@
         this.$element.removeAttr('data-clickover-open');
 
         this.options.esc_close && $(document).unbind('keyup.clickery');
+        this.tip().off('click', '[data-dismiss="clickover"]', $.proxy(this.clickery, this));
 
         $('body').off( this.attr.click_event_ns ); 
 
