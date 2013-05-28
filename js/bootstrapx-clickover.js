@@ -31,20 +31,22 @@
       this.attr.me = ((Math.random() * 10) + "").replace(/\D/g, '');
       this.attr.click_event_ns = "click." + this.attr.me + " touchstart." + this.attr.me;
 
+	  // added trigger override so that we can setup manul triggers without the click
       if (!options) options = {};
-
-      options.trigger = 'manual';
+        var notrigger = options.trigger == 'none'
+      
+	  options.trigger = 'manual';
 
       // call parent
       this.init( type, element, options );
 
       // setup our own handlers
-      this.$element.on( 'click', this.options.selector, $.proxy(this.clickery, this) );
+	  if (!notrigger)
+		this.$element.on( 'click', this.options.selector, $.proxy(this.clickery, this) );
 
       // soon add click hanlder to body to close this element
       // will need custom handler inside here
-    }
-    , clickery: function(e) {
+    }, clickery: function(e) {
       // clickery isn't only run by event handlers can be called by timeout or manually
       // only run our click handler and  
       // need to stop progration or body click handler would fire right away
@@ -63,54 +65,22 @@
       // add a custom class
       this.options.class_name && this.tip().addClass(this.options.class_name);
 
-      // we could override this to provide show and hide hooks 
-      this[ this.isShown() ? 'hide' : 'show' ]();
-
+      // Added in show and hide hooks
+	  this.isShown() ? typeof this.options.hide == 'function' ? this.options.hide.call(this) :
+            this['hide']() : typeof this.options.show == 'function' ? this.options.show.call(this) : this['show']()
+			
       // if shown add global click closer
-      if ( this.isShown() ) {
-        var that = this;
-
-        // close on global request, exclude clicks inside clickover
-        this.options.global_close &&
-          $('body').on( this.attr.click_event_ns, function(e) {
-            if ( !that.tip().has(e.target).length ) { that.clickery(); }
-          });
-
-        this.options.esc_close && $(document).bind('keyup.clickery', function(e) {
-            if (e.keyCode == 27) { that.clickery(); }
-            return;
-        });
-
-        // first check for others that might be open
-        // wanted to use 'click' but might accidently trigger other custom click handlers
-        // on clickover elements 
-        !this.options.allow_multiple &&
-            $('[data-clickover-open=1]').each( function() { 
-                $(this).data('clickover') && $(this).data('clickover').clickery(); });
-
-        // help us track elements w/ open clickovers using html5
-        this.$element.attr('data-clickover-open', 1);
-
-        // if element has close button then make that work, like to
-        // add option close_selector
-        this.tip().on('click', '[data-dismiss="clickover"]', $.proxy(this.clickery, this));
-
-        // trigger timeout hide
-        if ( this.options.auto_close && this.options.auto_close > 0 ) {
-          this.attr.tid = 
-            setTimeout( $.proxy(this.clickery, this), this.options.auto_close );  
-        }
-
-        // provide callback hooks for post shown event
-        typeof this.options.onShown == 'function' && this.options.onShown.call(this);
-        this.$element.trigger('shown');
+        if (this.isShown()) {
+			// Moved this to a separate method for ease of reuse
+            this.setTriggers()
       }
       else {
-        this.$element.removeAttr('data-clickover-open');
+            this.$element.removeAttr('data-' + this.type + '-open');
 
         this.options.esc_close && $(document).unbind('keyup.clickery');
 
         $('body').off( this.attr.click_event_ns ); 
+            this.tip().off('click.dismiss.' + this.type, '[data-dismiss="' + this.type + '"]')
 
         if ( typeof this.attr.tid == "number" ) {
           clearTimeout(this.attr.tid);
@@ -121,11 +91,51 @@
         typeof this.options.onHidden == 'function' && this.options.onHidden.call(this);
         this.$element.trigger('hidden');
       }
-    }
-    , isShown: function() {
+    }, setTriggers: function () {
+		var that = this;
+
+		// close on global request, exclude clicks inside clickover
+		this.options.global_close &&
+				$('body').on(this.attr.click_event_ns, function (e) {
+					if (!that.tip().has(e.target).length) {
+						that.clickery();
+					}
+				});
+
+		this.options.esc_close && $(document).bind('keyup.clickery', function (e) {
+			if (e.keyCode == 27) {
+				that.clickery();
+			}
+			return;
+		});
+
+		// first check for others that might be open
+		// wanted to use 'click' but might accidently trigger other custom click handlers
+		// on clickover elements 
+		!this.options.allow_multiple &&
+			$('[data-' + this.type + '-open=1]').each(function () {
+				$(this).data(that.type) && $(this).data(that.type).clickery();
+			});
+
+		// help us track elements w/ open clickovers using html5
+		this.$element.attr('data-' + this.type + '-open', 1);
+
+		// if element has close button then make that work, like to
+		// add option close_selector
+		this.tip().on('click.dismiss.' + this.type, '[data-dismiss="' + this.type + '"]', $.proxy(this.clickery, this));
+
+		// trigger timeout hide
+		if (this.options.auto_close && this.options.auto_close > 0) {
+			this.attr.tid =
+					setTimeout($.proxy(this.clickery, this), this.options.auto_close);
+		}
+
+		// provide callback hooks for post shown event
+		typeof this.options.onShown == 'function' && this.options.onShown.call(this);
+		this.$element.trigger('shown');
+	}, isShown: function () {
       return this.tip().hasClass('in');
-    }
-    , resetPosition: function() {
+    }, resetPosition: function() {
         var $tip
         , inside
         , pos
@@ -165,6 +175,20 @@
 
         $tip.css(tp)
       }
+    }, getTitle: function () {
+        // override title to allow for close icon
+        var title
+        , $e = this.$element
+        , o = this.options
+
+        title = $e.attr('data-original-title')
+        || (typeof o.title == 'function' ? o.title.call($e[0]) : o.title)
+
+        if (!title || title.length == 0)
+            return title
+			
+		// if we have a close icon the add it in here
+        return o.close_icon ? title + '<a class="close" data-dismiss="' + this.type + '" href="#">&times;</a>' : title
     }
     , debughide: function() {
       var dt = new Date().toString();
@@ -202,7 +226,7 @@
     tip_id: null,  /* id of popover container */
     class_name: 'clickover', /* default class name in addition to other classes */
     allow_multiple: 0 /* enable to allow for multiple clickovers to be open at the same time */
+    close_icon: 0 /* show a small close cross in the title bar*/
   })
 
 }( window.jQuery );
-
