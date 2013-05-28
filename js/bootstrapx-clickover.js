@@ -33,7 +33,7 @@
 
 	  // added trigger override so that we can setup manul triggers without the click
       if (!options) options = {};
-        var notrigger = options.trigger == 'none'
+	  var notrigger = options.trigger == 'none';
       
 	  options.trigger = 'manual';
 
@@ -72,7 +72,7 @@
       // if shown add global click closer
         if (this.isShown()) {
 			// Moved this to a separate method for ease of reuse
-            this.setTriggers()
+            this.setTriggers();
       }
       else {
             this.$element.removeAttr('data-' + this.type + '-open');
@@ -225,7 +225,7 @@
     height: null, /* number is px (don't add px), null or 0 - don't set anything */
     tip_id: null,  /* id of popover container */
     class_name: 'clickover', /* default class name in addition to other classes */
-    allow_multiple: 0 /* enable to allow for multiple clickovers to be open at the same time */
+    allow_multiple: 0, /* enable to allow for multiple clickovers to be open at the same time */
     close_icon: 0 /* show a small close cross in the title bar*/
   })
 
