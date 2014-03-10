@@ -3,7 +3,7 @@ Bootstrapx Clickover
 
 bootstrapx clickover provides enhancements to [Twitter Bootstrap Popovers](http://twitter.github.com/bootstrap#popover) to allow popovers to be opened/closed with click events and some other niceities
 
-Forked from https://github.com/colearnr/bootstrapx-clickover/ to support bootstrap 3.
+Forked from https://github.com/lecar-red/bootstrapx-clickover/ to support bootstrap 3.
 
 Quick Start
 -----------
@@ -39,4 +39,4 @@ https://github.com/colearnr/bootstrapx-clickover/issues
 Copyright and license
 ---------------------
 
-See https://github.com/colearnr/bootstrapx-clickover/
+See https://github.com/lecar-red/bootstrapx-clickover/
