@@ -4,6 +4,7 @@
  * version: 1.1
  * Tested with Bootstrap 3.1.1
  * ==========================================================
+ */
 !function($) {
   "use strict"
 
