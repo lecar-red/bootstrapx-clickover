@@ -1,16 +1,10 @@
 /* ==========================================================
  * bootstrapx-clickover.js
- * https://github.com/lecar-red/bootstrapx-clickover
- * version: 1.0
+ * Based on https://github.com/lecar-red/bootstrapx-clickover
+ * version: 1.1
+ * Tested with Bootstrap 3.1.1
  * ==========================================================
- *
- * Based on work from Twitter Bootstrap and 
- * from Popover library http://twitter.github.com/bootstrap/javascript.html#popover
- * from the great guys at Twitter.
- *
- * Untested with 2.1.0 but should worked with 2.0.x
- *
- * ========================================================== */
+ */
 !function($) {
   "use strict"
 
@@ -19,6 +13,20 @@
     // local init
     this.cinit('clickover', element, options );
   }
+
+  Clickover.DEFAULTS = $.extend({}, $.fn.popover.Constructor.DEFAULTS, {
+    trigger: 'manual',
+    auto_close:   0, /* ms to auto close clickover, 0 means none */
+    global_close: 1, /* allow close when clicked away from clickover */
+    esc_close:    1, /* allow clickover to close when esc key is pressed */
+    onShown:  null,  /* function to be run once clickover has been shown */
+    onHidden: null,  /* function to be run once clickover has been hidden */
+    width:  null, /* number is px (don't add px), null or 0 - don't set anything */
+    height: null, /* number is px (don't add px), null or 0 - don't set anything */
+    tip_id: null,  /* id of popover container */
+    class_name: 'clickover', /* default class name in addition to other classes */
+    allow_multiple: 0 /* enable to allow for multiple clickovers to be open at the same time */
+  })
 
   Clickover.prototype = $.extend({}, $.fn.popover.Constructor.prototype, {
 
@@ -46,7 +54,7 @@
     }
     , clickery: function(e) {
       // clickery isn't only run by event handlers can be called by timeout or manually
-      // only run our click handler and  
+      // only run our click handler and
       // need to stop progration or body click handler would fire right away
       if (e) {
         e.preventDefault();
@@ -63,7 +71,7 @@
       // add a custom class
       this.options.class_name && this.tip().addClass(this.options.class_name);
 
-      // we could override this to provide show and hide hooks 
+      // we could override this to provide show and hide hooks
       this[ this.isShown() ? 'hide' : 'show' ]();
 
       // if shown add global click closer
@@ -83,9 +91,9 @@
 
         // first check for others that might be open
         // wanted to use 'click' but might accidently trigger other custom click handlers
-        // on clickover elements 
+        // on clickover elements
         !this.options.allow_multiple &&
-            $('[data-clickover-open=1]').each( function() { 
+            $('[data-clickover-open=1]').each( function() {
                 $(this).data('clickover') && $(this).data('clickover').clickery(); });
 
         // help us track elements w/ open clickovers using html5
@@ -97,8 +105,8 @@
 
         // trigger timeout hide
         if ( this.options.auto_close && this.options.auto_close > 0 ) {
-          this.attr.tid = 
-            setTimeout( $.proxy(this.clickery, this), this.options.auto_close );  
+          this.attr.tid =
+            setTimeout( $.proxy(this.clickery, this), this.options.auto_close );
         }
 
         // provide callback hooks for post shown event
@@ -110,7 +118,7 @@
 
         this.options.esc_close && $(document).unbind('keyup.clickery');
 
-        $('body').off( this.attr.click_event_ns ); 
+        $('body').off( this.attr.click_event_ns );
 
         if ( typeof this.attr.tid == "number" ) {
           clearTimeout(this.attr.tid);
@@ -169,10 +177,14 @@
     , debughide: function() {
       var dt = new Date().toString();
 
-      console.log(dt + ": clickover hide");
+      //console.log(dt + ": clickover hide");
       this.hide();
     }
   })
+
+  Clickover.prototype.getDefaults = function () {
+    return Clickover.DEFAULTS
+  }
 
   /* plugin definition */
   /* stolen from bootstrap tooltip.js */
@@ -188,21 +200,6 @@
   }
 
   $.fn.clickover.Constructor = Clickover
-
-  // these defaults are passed directly to parent classes
-  $.fn.clickover.defaults = $.extend({}, $.fn.popover.defaults, {
-    trigger: 'manual',
-    auto_close:   0, /* ms to auto close clickover, 0 means none */
-    global_close: 1, /* allow close when clicked away from clickover */
-    esc_close:    1, /* allow clickover to close when esc key is pressed */
-    onShown:  null,  /* function to be run once clickover has been shown */
-    onHidden: null,  /* function to be run once clickover has been hidden */
-    width:  null, /* number is px (don't add px), null or 0 - don't set anything */
-    height: null, /* number is px (don't add px), null or 0 - don't set anything */
-    tip_id: null,  /* id of popover container */
-    class_name: 'clickover', /* default class name in addition to other classes */
-    allow_multiple: 0 /* enable to allow for multiple clickovers to be open at the same time */
-  })
 
 }( window.jQuery );
 
