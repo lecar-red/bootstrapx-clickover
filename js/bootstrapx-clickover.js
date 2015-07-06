@@ -93,7 +93,7 @@
 
         // if element has close button then make that work, like to
         // add option close_selector
-        this.tip().on('click', '[data-dismiss="clickover"]', $.proxy(this.clickery, this));
+        this.tip().one('click', '[data-dismiss="clickover"]', $.proxy(this.clickery, this));
 
         // trigger timeout hide
         if ( this.options.auto_close && this.options.auto_close > 0 ) {
